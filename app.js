@@ -10,12 +10,12 @@ const app = express();
 
 //routes 
 app.get('/', (req, res) => {
-    res.send("<h1>welcome to meet rooms  </h1>");
+    res.send("<h1>welcome to meet rooms </h1>");
 })
 //port 
 
 const PORT = process.env.PORT || 9010;
 //listen 
-app.listen(8000, () => {
-    console.log(" node server running on 8000");
+app.listen(PORT, () => {
+    console.log(` node server running in ${process.env.DEV_MODE} MODE on PORT no ${PORT} `.bgCyan.white);
 })
