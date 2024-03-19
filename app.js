@@ -2,12 +2,13 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const colors = require('colors');
-// dor env config
+const connectDB = require('./config/db.js');
+// dot env config
 dotenv.config({ path: '' });
 //rest object 
 const app = express();
-
-
+//connect mongo
+connectDB();
 //routes 
 app.get('/', (req, res) => {
     res.send("<h1>welcome to meet rooms </h1>");
