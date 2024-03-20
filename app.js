@@ -1,18 +1,28 @@
-//imports 
+//imports packages 
 const express = require('express');
 const dotenv = require('dotenv');
 const colors = require('colors');
+const cors = require('cors');
+const morgan = require('morgan');
+//imports files
 const connectDB = require('./config/db.js');
+//routes imports
+const testRoutes = require('./controller/testController.js');
+const authRoutes = require('./routes/authRoutes.js');
 // dot env config
-dotenv.config({ path: '' });
+dotenv.config();
 //rest object 
 const app = express();
 //connect mongo
 connectDB();
+//middlewares
+
+app.use(express.json());
+app.use(cors());
+app.use(morgan("dev"));
 //routes 
-app.get('/', (req, res) => {
-    res.send("<h1>welcome to meet rooms </h1>");
-})
+app.use('/test', testRoutes);
+app.use('/api/auth', authRoutes)
 //port 
 
 const PORT = process.env.PORT || 9010;
