@@ -10,6 +10,7 @@ const connectDB = require('./config/db.js');
 //routes imports
 const testRoutes = require('./controller/testController.js');
 const authRoutes = require('./routes/authRoutes.js');
+const roomRoutes = require('./routes/roomRoutes.js');
 const errorMiddleware = require('./middlewares/errorMiddleware.js');
 // dot env config
 dotenv.config();
@@ -25,6 +26,7 @@ app.use(morgan("dev"));
 //routes 
 app.use('/test', testRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/rooms', roomRoutes);
 //validation middleware 
 app.use(errorMiddleware);
 //port 
