@@ -4,8 +4,8 @@ const Room = require('../models/room.js');
 
 const createRoomController = async (req, res) => {
     try {
-        const { name, floor, capacity, assets } = req.body;
-        const room = new Room({ name, floor, capacity, assets, author: req.userId });
+        const { name, floor, capacity, assets, timings } = req.body;
+        const room = new Room({ name, floor, capacity, assets, timings, author: req.userId });
         await room.save();
         res.status(201).send('room created ');
     } catch (error) {
@@ -20,6 +20,9 @@ const allRoomsController = async (req, res) => {
         res.status(500).send('server error')
     }
 }
+//const getroomController=async (req,res) =>{
+
+//}
 module.exports = {
     createRoomController,
     allRoomsController
