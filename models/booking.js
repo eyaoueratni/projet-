@@ -3,12 +3,11 @@ const Schema = mongoose.Schema
 const User = require('../models/user.js')
 
 const bookingSchema = new Schema({
-    _bookingId: Schema.Types.ObjectId,
-    userId: { type: Schema.ObjectId, ref: 'User' },
-    roomId: { type: Schema.ObjectId, ref: 'Room' },
-    bookingdate: { type: String, required: true },
-    starthour: { type: String, required: true },
-    finishhour: { type: String, required: true },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    room: { type: mongoose.Schema.Types.ObjectId, ref: "MeetingRoom", required: true },
+    startTime: { type: Date, required: true },
+    endTime: { type: Date, required: true },
+    confirmed: { type: Boolean, default: false }, 
     nameMeet: { type: String, required: true },
 },
     { timestamps: true }

@@ -1,18 +1,30 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
+
 
 const authenticate = (req, res, next) => {
-    const token = req.header('Authorization');
-    if (!token || !token.startsWith('Bearer ')) {
-        return res.status(401).send('Authentication failed:invalid token ')
-    }
-    try {
-        const tokenData = token.split(' ')[1];
-        const decodedToken = jwt.verify(tokenData, process.env.JWT_SECRET);
-        req.userId = decodedToken._id;
-        next();
-    } catch (error) {
-        return res.status(401).send('Authentication failed:invalid token ')
-
-    }
+  let token = req.cookies.jwt;
+  if (!token) {
+    return res.status(403).send({ message: "No token provided!" });
 }
-module.exports = authenticate;
+token = token.replace('Bearer ', '');  // Remove Bearer from the token
+
+jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+        return res.status(401).send({ message: "Unauthorized!" });
+    }
+    req.userId = decoded.id;
+    req.role = decoded.role;
+      // Attach the user ID to the request object
+    next();
+});
+};
+const isAdmin = (req, res, next) => {
+  if (req.role === "admin") {
+    next();
+  } else {
+    return res.status(403).json({ message: "Forbidden: Admin access required" });
+  }
+};
+module.exports={
+  authenticate,
+  isAdmin}

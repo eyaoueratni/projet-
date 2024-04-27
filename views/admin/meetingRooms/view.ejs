@@ -1,0 +1,103 @@
+<style>
+    /* Style pour le titre */
+    h2 {
+        font-size: 2rem;
+        color: #333;
+    }
+
+    /* Style pour la section de la liste */
+    .list-group {
+        margin-top: 20px;
+    }
+
+    /* Style pour les éléments de la liste */
+    .list-group-item {
+        background-color: #f9f9f9;
+        border: none;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Style pour les colonnes */
+    .col-3, .col-9 {
+        padding: 10px;
+    }
+
+    /* Style pour la section principale */
+    .about {
+        background-color: #f2f2f2;
+        padding: 20px 0;
+        text-align: center;
+    }
+
+    /* Style pour la section contenant la liste */
+    .list-section {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+</style>
+<section class="about section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="mb-5">Meeting room <span> Détails </span> </h2>
+            </div>
+        </div>
+    </div>
+    <div class="container list-section">
+        <div class="row">
+            <div class="col">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page"><%= meetingRoom.name %></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+       
+
+    <ul class="list-group">
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-3"> <b>Name:</b></div>
+                <div class="col-9"><%= meetingRoom.name %></div>
+            </div>
+        </li>
+
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-3"> <b>Floor:</b></div>
+                <div class="col-9"><%= meetingRoom.floor %></div>
+            </div>
+        </li>
+
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-3"> <b>Capacity:</b></div>
+                <div class="col-9"><%= meetingRoom.capacity %></div>
+            </div>
+        </li>
+
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-3"> <b>Assets:</b></div>
+                <div class="col-9"><%= meetingRoom.assets %></div>
+            </div>
+        </li>
+
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-3"> <b>Availability:</b></div>
+                <div class="col-9"><%= meetingRoom.availability==true ? "Available" : "Not Available" %></div>
+            </div>
+        </li>
+    </ul>
+</section>
+

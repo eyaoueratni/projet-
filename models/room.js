@@ -6,16 +6,13 @@ const roomSchema = new Schema({
     floor: { type: String, required: true },
     capacity: Number,
     assets: {
-        macLab: { type: Boolean, default: false },
-        pcLab: { type: Boolean, default: false },
-        projector: { type: Boolean, default: false },
-        tv: { type: Boolean, default: false },
-        opWalls: { type: Boolean, default: false },
-        whiteBoard: { type: Boolean, default: false }
+        type:String,
+        required:true
     },
-    timings: {
-        type: Object,
-        required: [true, "available time is required"]
-    }
+   availibility:{
+    type:Boolean,
+    required:true,
+    default:false
+   }
 })
 const Room = (module.exports = mongoose.model('Room', roomSchema));

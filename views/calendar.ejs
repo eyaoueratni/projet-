@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+    <style>
+      #calendar {
+        width: 800px; /* Largeur du calendrier */
+        height: 600px; /* Hauteur du calendrier */
+        margin: 0 auto; /* Centrer horizontalement */
+      }
+    </style>
+  </head>
+  <body>
+    <div id='calendar'></div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          events: '/api/client/reservations' // Endpoint to fetch reservation data
+        });
+        calendar.render();
+      });
+    </script>
+  </body>
+</html>

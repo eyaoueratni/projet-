@@ -26,20 +26,8 @@ const userSchema = new mongoose.Schema({
 
 
     },
+    role: { type: String, enum: ["user", "admin"], required: true }, // 'user' or 'admin' as roles
 },
     { timestamps: true });
-//middleware
-userSchema.pre('save', async function () {
-    const salt = await bcrypt.genSalt(10)
-    this.password = await bcrypt.hash(this.password, salt);
-});
-//compare password 
-userSchema.methods.comparePassword = async function (userPassword) {
-    const isMatch = await bcrypt.compare(userPassword, this.password);
-    return isMatch;
-}
-//json webtoken
-userSchema.methods.createJwt = function () {
-    return jwt.sign({ userId: this._id }, process.env.JWT_secret);
-};
+
 const User = (module.exports = mongoose.model('User', userSchema))

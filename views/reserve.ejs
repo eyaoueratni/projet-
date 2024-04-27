@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserve <%= room.name %></title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <style>
+        /* Specific styles for this page */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 500px;
+            width: 90%;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            flex-grow: 1;
+            margin: auto; /* Horizontal centering */
+            margin-bottom: 20px; /* Adding bottom margin to avoid covering the footer */
+        }
+        h1 {
+            color: orangered;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Horizontal centering of form elements */
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #555;
+        }
+        input[type="datetime-local"] {
+            padding: 12px;
+            border: 2px solid black;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            width: 100%; /* Full container width */
+            max-width: 400px; /* Maximum width for better readability */
+            box-sizing: border-box; /* Include borders and padding in the width */
+            font-size: 16px;
+            outline: none; /* Remove border on focus */
+            transition: border-color 0.3s; /* Smooth transition for border color */
+        }
+        input[type="datetime-local"]:focus {
+            border-color: orangered; /* Change border color on focus */
+        }
+        .icon {
+            position: relative;
+            top: 4px;
+            margin-right: 8px;
+            color: #007bff;
+        }
+        button[type="submit"] {
+            background-color: orangered;
+            color: #fff;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+            text-transform: uppercase;
+            font-weight: bold;
+            outline: none; /* Remove border */
+        }
+        button[type="submit"]:hover {
+            background-color: orangered;
+        }
+        a {
+            color:orangered ;
+            text-decoration: none;
+            text-align: center;
+            margin-top: 20px;
+            display: inline-block;
+            transition: color 0.3s;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        a:hover {
+            color: orangered;
+        }
+        /* Style for the back link */
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+   
+
+    <div class="container">
+        <h1>Reserve <%= room.name %></h1>
+        <form action="/reserve" method="POST">
+            <input type="hidden" name="roomId" value="<%= room._id %>" />
+            <label for="nameMeet">Room:</label>
+              
+            
+            <label for="startTime"><i class="far fa-clock icon"></i>Start Time:</label>
+            <input type="datetime-local" id="startTime" name="startTime" required />
+            <label for="endTime"><i class="far fa-clock icon"></i>End Time:</label>
+            <input type="datetime-local" id="endTime" name="endTime" required />
+            <button type="submit">Submit Reservation</button>
+        </form>
+    </div>
+
+    <a href="/rooms" class="back-link">Back to all rooms</a>
+
+    
+</body>
+</html>

@@ -1,72 +1,41 @@
-const bookingSchema = require('../models/booking.js')
+const booking = require('../models/booking.js')
 const room = require('../models/room.js')
 const user = require('../models/user.js')
-const moment = require('moment')
 
 const authenticate = require('../middlewares/authenticate.js');
-const bookroomController = async (req, res) => {
+const getMeetingRooms = async (req, res) => {
+    room.find({})
+      .then((rooms) => {
+        console.log(rooms);
+        res.render("rooms", { rooms: rooms });
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send("Error retrieving meeting rooms.");
+      });
+  };
+// Get all reservations for a specific user
+const getReservationsForUser = async (req, res) => {
     try {
-        //convertir la date et heure en iso
-        req.body.date = moment(req.body.bookingdate, "DD-MM-YYYY").toISOString();
-        req.body.starthour = moment(req.body.starthour, "HH:mm").toISOString();
-        req.body.finishhour = moment(req.body.finishhour, "HH:mm").toISOString();
-        //creer la nouvelle reservation 
-        const newbooking = new bookingSchema(req.body);
-        await newbooking.save();
-        //chercher l'user qui a fait le booking
-        const bookeduser = await user.findOne({ _id: req.body.userId });
-
-        res.status(200).send({
-            success: true,
-            message: "Appointment Book succesfully",
-        });
+      const userId = req.userId;
+      if (!userId) {
+        console.log("User ID not found in request");
+        return res.status(400).json({ message: "User ID is required" });
+      }
+      console.log("Fetching reservations for user:", userId);
+      const reservations = await booking.find({ user: userId }).populate(
+        "room"
+      );
+      console.log("Found reservations:", reservations);
+      // Rendering the EJS page with reservations data
+      res.render("reservations", { reservations: reservations });
     } catch (error) {
-        console.log(error);
-        res.status(500).send({
-            success: false,
-            error,
-            message: "Error While Booking Appointment",
-        });
+      console.error("Error in getReservationsForUser:", error);
+      res.status(500).json({ message: "Internal server error", error: error });
     }
-};
+  };
 
-// 
-const bookAvailabilityController = async (req, res) => {
-    try {
-        const date = moment(req.body.bookingdate, "DD-MM-YY").toISOString();
-        const fromTime = moment(req.body.starthour, "HH:mm").toISOString();
-        const toTime = moment(req.body.finishhour, "HH:mm").toISOString();
-        const roomId = req.body.roomId;
-        //chercher les reservation de ce room en cette date et cette horaire
-        const bookings = await bookingSchema.find({
-            roomId,
-            bookingdate: date,
-            starthour: { $gte: fromTime },
-            finishhour: { $lte: toTime },
-        });
-        //if there is booking in this horaire en lui indique non disponibleno  
-        if (bookings.length > 0) {
-            return res.status(200).send({
-                message: "bookings not Availibale at this time",
-                success: true,
-            });
-        } else {
-            return res.status(200).send({
-                success: true,
-                message: "booking available",
-            });
-        }
-    } catch (error) {
-        console.log(error);
-        res.status(500).send({
-            success: false,
-            error,
-            message: "Error In Booking",
-        });
-    }
-};
-
-module.exports = {
-    bookroomController,
-    bookAvailabilityController
-}
+  module.exports={
+    getReservationsForUser,
+    getAllMeetingRooms,
+  }
